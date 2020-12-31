@@ -10,6 +10,10 @@ public class HelloWorldController {
     public String hewlloWorld(){
         return "Hello World123";
     }
+    @GetMapping("/hello-world2")
+    public String hewlloWorld1(){
+        return "Hello World123";
+    }
 
     @GetMapping("/hello-world-bean")
     public HelloWorldBean helloWorldBean(){
@@ -20,5 +24,6 @@ public class HelloWorldController {
     public HelloWorldBean helloWorldBean1(@PathVariable String name){
         return new HelloWorldBean(String.format("helloworld, %s",name));
     }
+
 
 }
