@@ -4,6 +4,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
@@ -37,7 +38,7 @@ public class UserController {
 
     @PostMapping("/users")
     //@RequestBody는 객체형태의 매개변수를 받기위함
-    public ResponseEntity<User> creatUser(@RequestBody User user){
+    public ResponseEntity<User> creatUser(@Valid @RequestBody User user){
         User saveedUser =service.save(user);
 
         URI location =ServletUriComponentsBuilder.fromCurrentRequest()
@@ -57,26 +58,17 @@ public class UserController {
 
     }
     @PutMapping("/users/{id}")
-
     public ResponseEntity<User> updateUser(@PathVariable int id, @RequestBody User user) {
-
         User updateUser = service.updateById(id, user);
-
         if (updateUser == null) {
-
             throw  new UserNotFoundException(String.format("ID[%s] is not Found", id));
 
         }
-
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
-
                 .path("/{id}")
-
                 .buildAndExpand(updateUser.getId())
-
                 .toUri();
-
-        return ResponseEntity.created(location).build();
+        return ResponseEntity.noContent().build();
 
     }
 
