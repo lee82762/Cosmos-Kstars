@@ -1,6 +1,5 @@
 package com.example.restfulwebservice.User;
 
-import com.fasterxml.jackson.annotation.JsonFilter;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,15 +12,15 @@ import java.util.Date;
 @AllArgsConstructor
 //@JsonIgnoreProperties(value ={"password"} )
 @NoArgsConstructor//default 생성자 생성
-@JsonFilter("UserInfo")
+//@JsonFilter("UserInfo")
+//@ApiModel(description = "사용자 상세정보를 위한 도메인 객체")
 public class User {
     private Integer id;
-
     @Size(min=2, message = "Name은 2글자 이상 입력해 주세요.")
     private String name;
     @Past
     private Date joinDate;
-
     private String password;
     private String ssn;
+
 }

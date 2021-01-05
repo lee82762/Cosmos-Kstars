@@ -1,11 +1,15 @@
 spring:
+  security:
+    user:
+      name: username
+      password: pass0rd
   messages:
     basename: messages
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/movie?verifyServerCertificate=false&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
-    username: user_admin
-    password: user_admin
+    url: jdbc:mysql://localhost:3306/cosmos?verifyServerCertificate=false&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    username: cosmos_user
+    password: 1q2w3e4r!!
 
   jpa:
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
@@ -26,3 +30,10 @@ logging:
           descriptor:
             sql:
               BasicBinder: TRACE
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+

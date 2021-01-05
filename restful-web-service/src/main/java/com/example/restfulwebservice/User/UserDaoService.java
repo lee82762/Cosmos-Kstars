@@ -17,10 +17,11 @@ public class UserDaoService {
         users.add(new User(2,"kimsung",new Date(),"pass2","801010-111111"));
         users.add(new User(3,"yehea",new Date(),"pass3","901010-111111"));
     }
+    //전체정보 찾는 서비스
     public List<User> findAll(){
         return  users;
     }
-    //전체정보 찾는 서비스
+
     public User save(User user){
         if(user.getId()==null){
             user.setId(++userCount);
@@ -28,6 +29,8 @@ public class UserDaoService {
         users.add(user);
         return user;
     }
+
+
     //하나만 찾아주는 서비스
     public User findOne(int id){
         for(User user :users){
@@ -37,6 +40,7 @@ public class UserDaoService {
         }
         return null;
     }
+
     //삭제 서비스
     public User deleteById(int id){
         Iterator<User>iterator= users.iterator();

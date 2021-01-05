@@ -1,5 +1,7 @@
 package com.example.restfulwebservice.User;
 
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -7,6 +9,10 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
 
 @RestController
 public class UserController {
@@ -23,9 +29,9 @@ public class UserController {
 
     }
 
-    //GET/users/1 or/users/10 ->String
+   //GET/users/1 or/users/10 ->String
     @GetMapping("/users/{id}")
-    public User retrieveUser(@PathVariable int id){
+    public EntityModel<User> retrieveUser(@PathVariable int id){
         //Ctrl+Art+V
         User user = service.findOne(id);
 
@@ -33,19 +39,27 @@ public class UserController {
         if(user==null){
             throw new UserNotFoundException(String.format("ID[%s] not found",id));
         }
-        return user;
+
+        //Heteoas
+        //하나의 리소스에서 파생할수있는 여러가지 추가적인 작업도 확인가능 링크 붙여주기
+        EntityModel<User>model=new EntityModel<>(user);
+        WebMvcLinkBuilder linkTo = linkTo(methodOn(this.getClass()).retrieveAllUsers());
+
+        model.add(linkTo.withRel("all-users"));
+
+        return model;
     }
 
     @PostMapping("/users")
     //@RequestBody는 객체형태의 매개변수를 받기위함
     public ResponseEntity<User> creatUser(@Valid @RequestBody User user){
-        User saveedUser =service.save(user);
+        User savedUser =service.save(user);
 
         URI location =ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
-                .buildAndExpand(saveedUser.getId())
+                .buildAndExpand(savedUser.getId())
                 .toUri();
-       return  ResponseEntity.created(location).build();
+         return ResponseEntity.created(location).build();
     }
 
     @DeleteMapping("/users/{id}")
