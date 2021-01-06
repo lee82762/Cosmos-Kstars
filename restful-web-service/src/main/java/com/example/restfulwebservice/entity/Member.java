@@ -1,28 +1,26 @@
+/*
+
 package com.example.restfulwebservice.entity;
 
 
 
-import lombok.*;
-
-import javax.persistence.*;
-
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Getter
-@Setter
-@Entity(name = "member_tbl")
+//@NoArgsConstructor(access = AccessLevel.PROTECTED)
+//@Getter
+//@Setter
+//@Entity(name = "member_tbl")
 public class Member {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    //@Id
+    //@GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(unique = true)
+    //@Column(unique = true)
     private String email;
 
     private String password;
     private String role;
 
-    @Builder
+    //@Builder
     public Member(final String email,
                   final String password,
                   final String role) {
@@ -32,3 +30,5 @@ public class Member {
     }
 
 }
+
+*/
